@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>立地評価アプリ</title>
+</head>
+<body>
+    <h1>立地評価アプリ</h1>
+    <form>
+        <h2 class="heading">物件情報</h2>
+        <input type="text" id="name" class="textbox-3" placeholder="物件名を入れてください"/>
+        <p id="errorMsg" style="color:red; display:none;">物件名を入力してください。</p>
+        <a href="list.html" class="button-link">
+            <button type="button">登録一覧へ</button>
+        </a>
+    </form>
+    <br>
+    <form id="evaluationForm">
+    <form>
+        <h2 class="heading">商圏評価</h2>
+        <details class="accordion-003">
+            <summary>マーケットボリューム</summary>
+            <p>基準値：商圏人口3万人</p>
+        </details>
+        <group class="inline-radio">
+          <div><input type="radio" name="market1" value="10" checked><label>基準以上</label></div>
+          <div><input type="radio" name="market1" value="7"><label>80-90％</label></div>
+          <div><input type="radio" name="market1" value="3"><label>70％以下</label></div>
+        </group>
+        <details class="accordion-003">
+            <summary>ターゲット層</summary>
+            <p>基準値：30-40代比率が50％</p>
+        </details>
+        <group class="inline-radio">
+          <div><input type="radio" name="market2" value="10" checked><label>基準以上</label></div>
+          <div><input type="radio" name="market2" value="7"><label>80-90％</label></div>
+          <div><input type="radio" name="market2" value="3"><label>70％以下</label></div>
+        </group>
+        <details class="accordion-003">
+            <summary>マーケットの将来性</summary>
+            <p>商圏内の将来性について人口増加、周辺整備の状況、都市計画の充実性を評価</p>
+        </details>
+        <group class="inline-radio">
+          <div><input type="radio" name="market3" value="5"><label>将来性あり</label></div>
+          <div><input type="radio" name="market3" value="3" checked><label>変動なし</label></div>
+          <div><input type="radio" name="market3" value="1"><label>縮小傾向</label></div>
+        </group>
+        <details class="accordion-003">
+            <summary>競合度</summary>
+            <p>基準値：商圏内競合店数10店舗。緩やかは基準半分以下、少ないは7割以下、多いは5割増、厳しいは2倍以上と評価</p>
+        </details>
+        <group class="inline-radio">
+          <div><input type="radio" name="market4" value="15"><label>緩やか</label></div>
+          <div><input type="radio" name="market4" value="10"><label>少ない</label></div>
+          <div><input type="radio" name="market4" value="7" checked><label>平均並</label></div>
+          <div><input type="radio" name="market4" value="4"><label>多い</label></div>
+          <div><input type="radio" name="market4" value="1"><label>厳しい</label></div>
+        </group>
+        <details class="accordion-003">
+            <summary>競合度の出店の可能性</summary>
+            <p>将来、商圏内外に競合の出店の可能性や用地があるか、すでに出店が決まっている場合などを評価</p>
+        </details>
+        <group class="inline-radio">
+          <div><input type="radio" name="market5" value="10"><label>余地なし</label></div>
+          <div><input type="radio" name="market5" value="7"><label>商圏外</label></div>
+          <div><input type="radio" name="market5" value="3" checked><label>商圏内</label></div>
+          <div><input type="radio" name="market5" value="1"><label>出店決定</label></div>
+        </group>
+    </form>
+
+    <br>
+    <form>
+        <h2 class="heading">交通評価</h2>
+        <details class="accordion-003">
+            <summary>立地</summary>
+            <p>車または歩行者の視点で、候補地が生活動線上にあれば良好、主動線からアプローチしやすければ普通、位置していない場合は難ありと評価</p>
+        </details>
+        <group class="inline-radio">
+          <div><input type="radio" name="traffic1" value="10"><label>良好</label></div>
+          <div><input type="radio" name="traffic1" value="5" checked><label>普通</label></div>
+          <div><input type="radio" name="traffic1" value="1"><label>難あり</label></div>
+        </group>
+        <details class="accordion-003">
+            <summary>マグネット・マーケットと店舗位置</summary>
+            <p>市街地、大型店、駅などのマグネット、取り込むべきマーケットの居住エリアと店舗の位置関係を評価。マグネットとマーケットの中心に店舗が位置する場合は中心、マーケット寄りの場合は近辺、居住エリア内にある場合は居住地、居住地エリアからやや離れる場合は圏内、より離れる場合は圏外と評価</p>
+        </details>
+        <group class="inline-radio">
+          <div><input type="radio" name="traffic2" value="10" checked><label>中心</label></div>
+          <div><input type="radio" name="traffic2" value="8"><label>近辺</label></div>
+          <div><input type="radio" name="traffic2" value="6"><label>居住地</label></div>
+          <div><input type="radio" name="traffic2" value="3"><label>圏内</label></div>
+          <div><input type="radio" name="traffic2" value="1"><label>圏外</label></div>
+        </group>
+        <details class="accordion-003">
+            <summary>反対側からのアプローチ</summary>
+            <p>反対車線から車は右折して進入できるか反対側から道路を横断して接近できるか評価。障害もなく自然にアプローチできれば容易、対面交通量が多い、渋滞、交差点付近など障がいがある場合はやや困難、中央分離帯で区切られているなど、右折、横断が不可能な場合は困難と評価</p>
+        </details>
+        <group class="inline-radio">
+          <div><input type="radio" name="traffic3" value="5" checked><label>容易</label></div>
+          <div><input type="radio" name="traffic3" value="3"><label>やや困難</label></div>
+          <div><input type="radio" name="traffic3" value="1"><label>困難</label></div>
+        </group>
+        <details class="accordion-003">
+            <summary>前面通行量（車の量）</summary>
+            <p>店舗前の乗用車の通行量を調査。1分間に平均20台以上で多い、10-20台未満で普通、10台未満で少ないと評価</p>
+        </details>
+        <group class="inline-radio">
+          <div><input type="radio" name="traffic4" value="10"><label>多い</label></div>
+          <div><input type="radio" name="traffic4" value="5" checked><label>普通</label></div>
+          <div><input type="radio" name="traffic4" value="1"><label>少ない</label></div>
+        </group>
+        <details class="accordion-003">
+            <summary>前面通行量（車の質）</summary>
+            <p>店舗前に通行する車は乗用車か調査。乗用車の質の基準は6割とする</p>
+        </details>
+        <group class="inline-radio">
+          <div><input type="radio" name="traffic5" value="5" checked><label>6割以上</label></div>
+          <div><input type="radio" name="traffic5" value="2"><label>6割未満</label></div>
+        </group>
+        <details class="accordion-003">
+            <summary>前面通行量（人の量）</summary>
+            <p>店舗前の人の通行量を調査。1分間に平均10人以上で多い、5-10人未満で普通、5人未満で少ないと評価</p>
+        </details>
+        <group class="inline-radio">
+          <div><input type="radio" name="traffic6" value="10"><label>多い</label></div>
+          <div><input type="radio" name="traffic6" value="5" checked><label>普通</label></div>
+          <div><input type="radio" name="traffic6" value="1"><label>少ない</label></div>
+        </group>
+        <details class="accordion-003">
+            <summary>前面通行量（人の質）</summary>
+            <p>店舗前に通行する人はターゲット層が多いか調査。ターゲット層の質の良さの基準は35％以上とする</p>
+        </details>
+        <group class="inline-radio">
+          <div><input type="radio" name="traffic7" value="5" checked><label>35％以上</label></div>
+          <div><input type="radio" name="traffic7" value="2"><label>35％未満</label></div>
+        </group>
+        <details class="accordion-003">
+            <summary>競合店との立地上の優位性</summary>
+            <p>候補店と同じ商圏内での有力競合店との立地の優位性を評価。</p>
+        </details>
+        <group class="inline-radio">
+          <div><input type="radio" name="traffic8" value="10"><label>優位</label></div>
+          <div><input type="radio" name="traffic8" value="5" checked><label>同水準</label></div>
+          <div><input type="radio" name="traffic8" value="1"><label>劣る</label></div>
+        </group>
+    </form>
+
+    <br>
+    <form>
+        <h2 class="heading">地点評価</h2>
+        <details class="accordion-003">
+            <summary>視認性</summary>
+            <p>ドライバー目線、もしくは人の目線でその人が自然に目を向ける方向で、8割以上の人が認知できれば良好、6-7割の人が認知できれば普通、半分以下の認知は難ありと評価</p>
+        </details>
+        <group class="inline-radio">
+          <div><input type="radio" name="point1" value="15"><label>良好</label></div>
+          <div><input type="radio" name="point1" value="10" checked><label>普通</label></div>
+          <div><input type="radio" name="point1" value="5"><label>難あり</label></div>
+        </group>
+        <details class="accordion-003">
+            <summary>車・人の入りやすさ・出やすさ</summary>
+            <p>街路樹、別の建物、看板、電線、道路標識などの店前障害物の有無や敷地への進入路の切り裂き、通行車両のスピード、信号機の位置などから物件への出入りに問題なければ問題なし、初心者や女性ドライバーには抵抗あればやや難あり普通のドライバーでも出入りがしづらい場合は難ありと評価</p>
+        </details>
+        <group class="inline-radio">
+          <div><input type="radio" name="point2" value="10" checked><label>問題なし</label></div>
+          <div><input type="radio" name="point2" value="7"><label>やや難あり</label></div>
+          <div><input type="radio" name="point2" value="3"><label>難あり</label></div>
+        </group>
+        <details class="accordion-003">
+            <summary>駐車場</summary>
+            <p>基準値：駐車場台数20台。8-9割でやや下回る、7割以下で下回ると評価</p>
+        </details>
+        <group class="inline-radio">
+          <div><input type="radio" name="point3" value="10" checked><label>基準以上</label></div>
+          <div><input type="radio" name="point3" value="7"><label>やや下回る</label></div>
+          <div><input type="radio" name="point3" value="3"><label>下回る</label></div>
+        </group>
+        <details class="accordion-003">
+            <summary>店舗坪数</summary>
+            <p>基準値：店舗坪数55坪。ほぼ基準で9割程度、やや下回るで7割程度、下回るで7割も達せず場合評価</p>
+        </details>
+        <group class="inline-radio">
+          <div><input type="radio" name="point4" value="10"><label>基準満たす</label></div>
+          <div><input type="radio" name="point4" value="7" checked><label>ほぼ基準</label></div>
+          <div><input type="radio" name="point4" value="4"><label>やや下回る</label></div>
+          <div><input type="radio" name="point4" value="1"><label>下回る</label></div>
+        </group>
+        <details class="accordion-003">
+            <summary>店舗形状</summary>
+            <p>店舗もしくは敷地の形状を評価。同じ面積でも向き・不向きがある。長方形・平行は間口が広く、奥行きが浅い、正方形、長方形・垂直は間口が狭く、奥行きが深い、その他変形のいずれかで評価</p>
+        </details>
+        <group class="inline-radio">
+          <div><input type="radio" name="point5" value="5" checked><label>長方形・平行</label></div>
+          <div><input type="radio" name="point5" value="4"><label>正方形</label></div>
+          <div><input type="radio" name="point5" value="2" checked><label>長方形・垂直</label></div>
+          <div><input type="radio" name="point5" value="1"><label>その他変形</label></div>
+        </group>
+        <br>
+        <button type="button" id="submitBtn">結果を計算</button>
+    </form>
+    </form>
+
+    <br>
+    <!-- 結果表示用 -->
+    <form>
+    <h2 class="heading">結果</h2>
+    <p class="result-text">評価</p>
+    <span id="grade"></span>
+    <p class="result-text">合計: <span id="totalScore">0</span>点</p>
+    <div class="balloon-009">
+    <!-- お好きなアイコン画像を指定してください -->
+    <img src="/Users/user/Desktop/locationRating/icon.png" alt="" />
+    <p>コメント: <span id="comment">-</span></p>
+    </div>
+    <br>
+    <button type="button" id="saveBtn">保存</button>
+    </form>
+
+    <script type="module">
+        // Firebaseの初期化
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, query, where, updateDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyBQNhMg4wL2pnbRsuSt7bwxipDZyYSNTTM",
+          authDomain: "locationrating-5deb7.firebaseapp.com",
+          projectId: "locationrating-5deb7",
+          storageBucket: "locationrating-5deb7.appspot.com",
+          messagingSenderId: "880330985136",
+          appId: "1:880330985136:web:dad116ffbd5345553df575"
+        };
+
+        // Firebaseアプリの初期化
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // 計算結果表示
+        document.getElementById("submitBtn").addEventListener("click", () => {
+            const name = document.getElementById("name").value;
+            const errorMsg = document.getElementById("errorMsg");
+
+            if (name === "") {
+                errorMsg.style.display = "block";
+                // nameの入力欄までスクロール
+                document.getElementById("name").scrollIntoView({ behavior: "smooth", block: "center" });
+                return;
+            } else {
+                errorMsg.style.display = "none";
+            }
+
+            // 商圏評価の点数計算
+            const marketScore1 = parseInt(document.querySelector('input[name="market1"]:checked').value);
+            const marketScore2 = parseInt(document.querySelector('input[name="market2"]:checked').value);
+            const marketScore3 = parseInt(document.querySelector('input[name="market3"]:checked').value);
+            const marketScore4 = parseInt(document.querySelector('input[name="market4"]:checked').value);
+            const marketScore5 = parseInt(document.querySelector('input[name="market5"]:checked').value);
+            const marketTotal = marketScore1 + marketScore2 + marketScore3 + marketScore4 + marketScore5;
+
+            // 交通評価の点数計算
+            const trafficScore1 = parseInt(document.querySelector('input[name="traffic1"]:checked').value);
+            const trafficScore2 = parseInt(document.querySelector('input[name="traffic2"]:checked').value);
+            const trafficScore3 = parseInt(document.querySelector('input[name="traffic3"]:checked').value);
+            const trafficScore4 = parseInt(document.querySelector('input[name="traffic4"]:checked').value);
+            const trafficScore5 = parseInt(document.querySelector('input[name="traffic5"]:checked').value);
+            const trafficScore6 = parseInt(document.querySelector('input[name="traffic6"]:checked').value);
+            const trafficScore7 = parseInt(document.querySelector('input[name="traffic7"]:checked').value);
+            const trafficScore8 = parseInt(document.querySelector('input[name="traffic8"]:checked').value);
+            const trafficTotal = trafficScore1 + trafficScore2 + trafficScore3 + trafficScore4 + trafficScore5 + trafficScore6 + trafficScore7 + trafficScore8;
+
+            // 地点評価の点数計算
+            const pointScore1 = parseInt(document.querySelector('input[name="point1"]:checked').value);
+            const pointScore2 = parseInt(document.querySelector('input[name="point2"]:checked').value);
+            const pointScore3 = parseInt(document.querySelector('input[name="point3"]:checked').value);
+            const pointScore4 = parseInt(document.querySelector('input[name="point4"]:checked').value);
+            const pointScore5 = parseInt(document.querySelector('input[name="point5"]:checked').value);
+            const pointTotal = pointScore1 + pointScore2 + pointScore3 + pointScore4 + pointScore5;
+
+            // 合計点数計算
+            const totalScore = marketTotal + trafficTotal + pointTotal;
+
+            const grade = calculateGrade(totalScore);
+            const comment = generateComment(grade);
+
+            // 結果を画面に表示
+            document.getElementById("totalScore").innerText = totalScore;
+            document.getElementById("grade").innerText = grade;
+            document.getElementById("comment").innerText = comment;
+
+            // 評価に応じてupdateGradeを呼び出す
+            updateGrade(grade);
+
+        });
+
+        // Firebase保存処理
+        document.getElementById("saveBtn").addEventListener("click", async () => {
+            const name = document.getElementById("name").value;
+            if (name === "") {
+                document.getElementById("errorMsg").style.display = "block";
+                // nameの入力欄までスクロール
+                document.getElementById("name").scrollIntoView({ behavior: "smooth", block: "center" });
+                return;
+            }
+
+            // 商圏評価の点数計算
+            const marketScore1 = parseInt(document.querySelector('input[name="market1"]:checked').value);
+            const marketScore2 = parseInt(document.querySelector('input[name="market2"]:checked').value);
+            const marketScore3 = parseInt(document.querySelector('input[name="market3"]:checked').value);
+            const marketScore4 = parseInt(document.querySelector('input[name="market4"]:checked').value);
+            const marketScore5 = parseInt(document.querySelector('input[name="market5"]:checked').value);
+            const marketTotal = marketScore1 + marketScore2 + marketScore3 + marketScore4 + marketScore5;
+
+            // 交通評価の点数計算
+            const trafficScore1 = parseInt(document.querySelector('input[name="traffic1"]:checked').value);
+            const trafficScore2 = parseInt(document.querySelector('input[name="traffic2"]:checked').value);
+            const trafficScore3 = parseInt(document.querySelector('input[name="traffic3"]:checked').value);
+            const trafficScore4 = parseInt(document.querySelector('input[name="traffic4"]:checked').value);
+            const trafficScore5 = parseInt(document.querySelector('input[name="traffic5"]:checked').value);
+            const trafficScore6 = parseInt(document.querySelector('input[name="traffic6"]:checked').value);
+            const trafficScore7 = parseInt(document.querySelector('input[name="traffic7"]:checked').value);
+            const trafficScore8 = parseInt(document.querySelector('input[name="traffic8"]:checked').value);
+            const trafficTotal = trafficScore1 + trafficScore2 + trafficScore3 + trafficScore4 + trafficScore5 + trafficScore6 + trafficScore7 + trafficScore8;
+
+            // 地点評価の点数計算
+            const pointScore1 = parseInt(document.querySelector('input[name="point1"]:checked').value);
+            const pointScore2 = parseInt(document.querySelector('input[name="point2"]:checked').value);
+            const pointScore3 = parseInt(document.querySelector('input[name="point3"]:checked').value);
+            const pointScore4 = parseInt(document.querySelector('input[name="point4"]:checked').value);
+            const pointScore5 = parseInt(document.querySelector('input[name="point5"]:checked').value);
+            const pointTotal = pointScore1 + pointScore2 + pointScore3 + pointScore4 + pointScore5;
+
+            const totalScore = document.getElementById("totalScore").innerText;
+            const grade = document.getElementById("grade").innerText;
+            const comment = document.getElementById("comment").innerText;
+
+            // Firebaseにデータを保存（既存データがあるかチェック）
+            try {
+                // 'name' フィールドで一致するドキュメントがあるか確認
+                const q = query(collection(db, "evaluations"), where("name", "==", name));
+                const querySnapshot = await getDocs(q);
+
+                if (!querySnapshot.empty) {
+                    // 一致するドキュメントが存在する場合
+                    const docRef = querySnapshot.docs[0].ref;
+                    const confirmUpdate = confirm("既にこの名前のデータが存在します。上書きしてよろしいですか？");
+
+                    if (confirmUpdate) {
+                        // 上書きする場合
+                        await updateDoc(docRef, {
+                            marketTotal: marketTotal,
+                            trafficTotal: trafficTotal,
+                            pointTotal: pointTotal,
+                            totalScore: totalScore,
+                            grade: grade,
+                            comment: comment,
+                            timestamp: new Date()
+                        });
+                        console.log("Document updated with ID: ", docRef.id);
+                        alert("データが上書きされました");
+                    } else {
+                        console.log("更新をキャンセルしました。");
+                    }
+                } else {
+                    // 新規登録の場合
+                    const newDocRef = await addDoc(collection(db, "evaluations"), {
+                        name: name,
+                        marketTotal: marketTotal,
+                        trafficTotal: trafficTotal,
+                        pointTotal: pointTotal,
+                        totalScore: totalScore,
+                        grade: grade,
+                        comment: comment,
+                        timestamp: new Date()
+                    });
+                    console.log("Document written with ID: ", newDocRef.id);
+                    alert("データが保存されました");
+                }
+            } catch (e) {
+                console.error("Error adding/updating document: ", e);
+                alert("データの保存中にエラーが発生しました。再試行してください。");
+            }
+        });
+
+        function calculateGrade(totalScore) {
+            // 点数に基づいて評価を計算
+            if (totalScore >= 135) return "S";
+            if (totalScore >= 120) return "A";
+            if (totalScore >= 105) return "B";
+            if (totalScore >= 90) return "C";
+            return "D";
+
+        }
+
+        function generateComment(grade) {
+            // 評価に基づいたコメントを生成
+            switch (grade) {
+                case "S":
+                    return "出店すべき！";
+                case "A":
+                    return "出店可";
+                case "B":
+                    return "細部検討";
+                case "C":
+                    return "出店慎重";
+                case "D":
+                    return "出店不可";
+                default:
+                    return "-";
+            }
+        }
+
+        // 評価の動的操作
+        function updateGrade(grade) {
+            const gradeElement = document.getElementById('grade');
+            gradeElement.innerText = grade; // 評価を設定
+
+            // すべてのクラスをリセット
+            gradeElement.classList.remove('grade-s', 'grade-a', 'grade-b', 'grade-c', 'grade-d', 'grade-w');
+
+            // 評価に応じてクラスを追加
+            switch (grade) {
+                case 'S':
+                    gradeElement.classList.add('grade-s');
+                    break;
+                case 'A':
+                    gradeElement.classList.add('grade-a');
+                    break;
+                case 'B':
+                    gradeElement.classList.add('grade-b');
+                    break;
+                case 'C':
+                    gradeElement.classList.add('grade-c');
+                    break;
+                case 'D':
+                    gradeElement.classList.add('grade-d');
+                    break;
+                default:
+                    gradeElement.classList.add('grade-w'); // デフォルトはDを黒字に設定
+            }
+        }
+
+        // 評価の例: 'S', 'A', 'B', 'C', 'D'
+        updateGrade(''); // 'S'の場合の例
+    </script>
+</body>
+</html>

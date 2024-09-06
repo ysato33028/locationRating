@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>評価一覧</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+　　<form>
+        <h2 class="heading">評価一覧</h2>
+            <table id="evaluationTable">
+                <thead>
+                    <tr>
+                        <th>物件名</th>
+                        <th>評価</th>
+                        <th>コメント</th>
+                        <th>詳細</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- データがここに追加される -->
+                </tbody>
+            </table>
+    </form>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBQNhMg4wL2pnbRsuSt7bwxipDZyYSNTTM",
+        authDomain: "locationrating-5deb7.firebaseapp.com",
+        projectId: "locationrating-5deb7",
+        storageBucket: "locationrating-5deb7.appspot.com",
+        messagingSenderId: "880330985136",
+        appId: "1:880330985136:web:dad116ffbd5345553df575"
+    };
+
+    // Firebaseアプリの初期化
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Firestoreからデータを取得して表に追加（降順でソート）
+    async function fetchEvaluations() {
+        // 'timestamp' フィールドで降順にソート
+        const evaluationsRef = collection(db, "evaluations");
+        const q = query(evaluationsRef, orderBy("timestamp", "desc"));
+        const querySnapshot = await getDocs(q);
+        const tbody = document.querySelector("#evaluationTable tbody");
+
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const row = `
+                <tr>
+                    <td>${data.name}</td>
+                    <td>${data.grade}</td>
+                    <td>${data.comment}</td>
+                    <td><a href="detail.html?id=${doc.id}">＞</a></td>
+                </tr>
+            `;
+            tbody.insertAdjacentHTML('beforeend', row);
+        });
+    }
+
+    // ページロード時にデータをフェッチ
+    window.onload = fetchEvaluations;
+</script>
+
+</body>
+</html>

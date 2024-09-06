@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>評価詳細</title>
+</head>
+<body>
+    <form>
+        <h2 class="heading">評価詳細</h2>
+            <ul class="cp_list">
+                <li><strong>物件名:</strong> <span id="name"></span></li>
+                <li><strong>商圏評価:</strong> <span id="marketTotal"></span></li>
+                <li><strong>交通評価:</strong> <span id="trafficTotal"></span></li>
+                <li><strong>地点評価:</strong> <span id="pointTotal"></span></li>
+                <li><strong>合計点数:</strong> <span id="totalScore"></span></li>
+                <li><strong>評価:</strong> <span id="grade"></span></li>
+                <li><strong>コメント:</strong> <span id="comment"></span></li>
+                <li><strong>タイムスタンプ:</strong> <span id="timestamp"></span></li>
+            </ul>
+        <button type="deleteBtn" id="deleteBtn">この物件情報を削除しますか？</button>
+    </form>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getFirestore, doc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBQNhMg4wL2pnbRsuSt7bwxipDZyYSNTTM",
+            authDomain: "locationrating-5deb7.firebaseapp.com",
+            projectId: "locationrating-5deb7",
+            storageBucket: "locationrating-5deb7.appspot.com",
+            messagingSenderId: "880330985136",
+            appId: "1:880330985136:web:dad116ffbd5345553df575"
+        };
+
+        // Firebaseアプリの初期化
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // 詳細ページにデータを表示
+        async function fetchDetail() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+
+            if (!id) {
+                alert("IDが見つかりません");
+                return;
+            }
+
+            const docRef = doc(db, "evaluations", id);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                document.getElementById('name').innerText = data.name;
+                document.getElementById('marketTotal').innerText = data.marketTotal;
+                document.getElementById('trafficTotal').innerText = data.trafficTotal;
+                document.getElementById('pointTotal').innerText = data.pointTotal;
+                document.getElementById('totalScore').innerText = data.totalScore;
+                document.getElementById('grade').innerText = data.grade;
+                document.getElementById('comment').innerText = data.comment;
+                document.getElementById('timestamp').innerText = new Date(data.timestamp.seconds * 1000).toLocaleString();
+            } else {
+                alert("この物件のデータは存在しません");
+            }
+        }
+
+        // 評価の動的操作
+        function updateGrade(grade) {
+            const gradeElement = document.getElementById('grade');
+            gradeElement.innerText = grade; // 評価を設定
+
+            // すべてのクラスをリセット
+            gradeElement.classList.remove('grade-s', 'grade-a', 'grade-b', 'grade-c', 'grade-d', 'grade-w');
+
+            // 評価に応じてクラスを追加
+            switch (grade) {
+                case 'S':
+                    gradeElement.classList.add('grade-s');
+                    break;
+                case 'A':
+                    gradeElement.classList.add('grade-a');
+                    break;
+                case 'B':
+                    gradeElement.classList.add('grade-b');
+                    break;
+                case 'C':
+                    gradeElement.classList.add('grade-c');
+                    break;
+                case 'D':
+                    gradeElement.classList.add('grade-d');
+                    break;
+                default:
+                    gradeElement.classList.add('grade-w'); // デフォルトはDを黒字に設定
+            }
+        }
+
+        // 評価の例: 'S', 'A', 'B', 'C', 'D'
+        updateGrade(''); // 'S'の場合の例
+
+        // 削除ボタンがクリックされたときの処理
+        document.getElementById('deleteBtn').addEventListener('click', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+
+            if (!id) {
+                alert("IDが見つかりません");
+                return;
+            }
+
+            const confirmDelete = confirm("本当にこの物件情報を削除しますか？");
+            if (confirmDelete) {
+                try {
+                    await deleteDoc(doc(db, "evaluations", id));
+                    alert("物件情報が削除されました");
+                    window.location.href = 'index.html'; // 一覧ページに戻る
+                } catch (e) {
+                    console.error("Error removing document: ", e);
+                    alert("削除中にエラーが発生しました。再試行してください。");
+                }
+            }
+        });
+
+        // ページロード時に詳細データをフェッチ
+        window.onload = fetchDetail;
+    </script>
+</body>
+</html>
